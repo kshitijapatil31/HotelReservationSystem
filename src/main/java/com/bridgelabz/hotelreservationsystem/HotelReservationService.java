@@ -32,7 +32,7 @@ public class HotelReservationService {
 			dateArray.add(dateArray.get(dateArray.size() - 1).plusDays(1));
 			differenceInDays--;
 		}
-		Integer[] rate = { 0, 0, 0 };
+		Integer[] rate =new Integer[] { 0, 0, 0 };
 		dateArray.stream().forEach(n -> {
 			for (int i = 0; i < hotels.size(); i++) {
 				if ((dateArray.get(i).getDayOfWeek().equals(DayOfWeek.SATURDAY))
