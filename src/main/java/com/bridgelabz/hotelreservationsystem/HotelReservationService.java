@@ -7,19 +7,20 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 
 public class HotelReservationService {
 
 	Hotel hotel;
-	ArrayList<Hotel> hotels = new ArrayList<>();
-
+	public static ArrayList<Hotel> hotels = new ArrayList<>();
+	
 	public void addHotels(Hotel hotel) {
 
 		hotels.add(hotel);
 
 	}
 
-	public String minCostHotel(LocalDate start, LocalDate end) {
+	public void minCostHotel(LocalDate start, LocalDate end) {
 		ArrayList<LocalDate> dateArray = new ArrayList<>();
 		DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 
@@ -32,7 +33,7 @@ public class HotelReservationService {
 			dateArray.add(dateArray.get(dateArray.size() - 1).plusDays(1));
 			differenceInDays--;
 		}
-		Integer[] rate =new Integer[] { 0, 0, 0 };
+		Integer[] rate = new Integer[] { 0, 0, 0 };
 		dateArray.stream().forEach(n -> {
 			for (int i = 0; i < hotels.size(); i++) {
 				if ((dateArray.get(i).getDayOfWeek().equals(DayOfWeek.SATURDAY))
@@ -43,10 +44,13 @@ public class HotelReservationService {
 				}
 			}
 		});
-		Integer k = Arrays.asList(rate).indexOf(Collections.min(Arrays.asList(rate)));
-		System.out.println(hotels.get(k).hotelName + "Rate" + rate[k]);
-
-		return hotels.get(k).hotelName;
+		Integer n = Collections.min(Arrays.asList(rate));
+		for (int i = 0; i < rate.length; i++) {
+			if (rate[i].equals(n)) {
+				hotels.add(hotels.get(i).hotelName);
+			}
+		}
+		System.out.println("Cheapest Hotel :" + hotels.get(n).hotelName);
 
 	}
 }

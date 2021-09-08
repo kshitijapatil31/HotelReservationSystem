@@ -7,10 +7,6 @@ public class Hotel {
 	public String hotelName;
 	public int rating;
 	private Map<CustomerType ,Rate> rate;
-
-	
-	
-	
 	public Hotel(String hotelName, int rating, Map<CustomerType, Rate> rate) {
 		super();
 		this.hotelName = hotelName;
@@ -35,6 +31,15 @@ public class Hotel {
 	public void setRate(Map<CustomerType, Rate> rate) {
 		this.rate = rate;
 	}
+	@Override
+	public String toString() {
+		return "Hotel [hotelName=" + hotelName + ", rating=" + rating + ", rate=" + rate + "]";
+	}
+
+	
+	
+	
+	
 	
 	
 	
