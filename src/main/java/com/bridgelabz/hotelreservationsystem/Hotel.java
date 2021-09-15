@@ -6,7 +6,7 @@ public class Hotel {
 
 	public String hotelName;
 	public int rating;
-	private Map<CustomerType ,Rate> rate;
+	private Map<CustomerType,Rate> rate;
 	public Hotel(String hotelName, int rating, Map<CustomerType, Rate> rate) {
 		super();
 		this.hotelName = hotelName;

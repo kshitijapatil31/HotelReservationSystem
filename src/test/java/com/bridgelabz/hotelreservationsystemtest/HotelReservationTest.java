@@ -7,6 +7,10 @@ import com.bridgelabz.hotelreservationsystem.Hotel;
 import com.bridgelabz.hotelreservationsystem.HotelReservationService;
 import com.bridgelabz.hotelreservationsystem.Rate;
 
+import org.junit.Assert;
+
+import java.util.Scanner;
+
 public class HotelReservationTest {
 	
 	HotelReservationService hotelReservation;
@@ -41,11 +45,11 @@ public class HotelReservationTest {
 	
 	@Test
 	public void findChepestHotelAmongAll_shouldRetuen_HotelName() {
-		LocalDate date1=LocalDate.parse("09Sep2020");
-		LocalDate date2=LocalDate.parse("11Sep2020");
-		
+		Scanner sc=new Scanner(System.in);
+		String date=sc.next();		
 		hotelReservation=new HotelReservationService();
-		hotelReservation.minCostHotel(date1, date2);
+		String name=hotelReservation.bestRatedHotel(date);
+		Assert.assertEquals("Bridgewood, Rating:4 and Rates:200", name);
 		
 	}
 }

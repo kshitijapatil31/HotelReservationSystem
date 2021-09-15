@@ -7,7 +7,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class HotelReservationService {
 
@@ -20,20 +22,22 @@ public class HotelReservationService {
 
 	}
 
-	public void minCostHotel(LocalDate start, LocalDate end) {
-		ArrayList<LocalDate> dateArray = new ArrayList<>();
-		DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+	public String[] minCostHotel(String date) {
+		String[] str=date.split(",");
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 
-		String d1 = start.format(date);
+		ArrayList<LocalDate>dateArray=new ArrayList<>();
+		
 
-		dateArray.add(start);
-		long differenceInDays = ChronoUnit.DAYS.between(start, end);
+		dateArray.add(LocalDate.parse(str[0],dateTimeFormatter));
+		long differenceInDays = ChronoUnit.DAYS.between(LocalDate.parse(str[0],dateTimeFormatter), LocalDate.parse(str[1],dateTimeFormatter));
 
 		while (differenceInDays > 0) {
 			dateArray.add(dateArray.get(dateArray.size() - 1).plusDays(1));
 			differenceInDays--;
 		}
 		Integer[] rate = new Integer[] { 0, 0, 0 };
+		ArrayList<String>name=new ArrayList<>();
 		dateArray.stream().forEach(n -> {
 			for (int i = 0; i < hotels.size(); i++) {
 				if ((dateArray.get(i).getDayOfWeek().equals(DayOfWeek.SATURDAY))
@@ -47,10 +51,36 @@ public class HotelReservationService {
 		Integer n = Collections.min(Arrays.asList(rate));
 		for (int i = 0; i < rate.length; i++) {
 			if (rate[i].equals(n)) {
-				hotels.add(hotels.get(i).hotelName);
+				name.add(hotels.get(i).hotelName);
 			}
 		}
-		System.out.println("Cheapest Hotel :" + hotels.get(n).hotelName);
-
+		String []string=new String[2];
+		str[0]=String.join("and",name );
+		str[1]=String.valueOf(n);
+		return string;
+	
+	}
+	public String calculate(String date) {
+		String name[]=minCostHotel(date);
+		return name[0]+", rates: "+Integer.valueOf(name[1]);
+	}
+	public String bestRatedHotel(String date) {
+		String name[]=minCostHotel(date);
+		String hotel[]=name[0].split("and");
+		
+		Map<String,Integer>rating=new HashMap<>();
+		Integer ratings=0;
+		for(String x:hotel) {
+			for(int i=0;i<hotels.size();i++) {
+				if(hotels.get(i).hotelName.equals(x)) {
+					rating.put(x, hotels.get(i).rating);
+					ratings=Math.max(ratings, hotels.get(i).rating);
+				}
+				
+			}
+		}
+		final Integer in=ratings;
+		ArrayList<String>hotelRate=Arrays.asList(hotel).stream().filter(n->rating.get(n).equals(in)).collect(Collectors.toCollection(ArrayList::new));
+		return String.join("and", hotelRate)+", Rating "+ratings+"and total rates "+name[1];
 	}
 }
