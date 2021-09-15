@@ -49,7 +49,17 @@ public class HotelReservationTest {
 		String date=sc.next();		
 		hotelReservation=new HotelReservationService();
 		String name=hotelReservation.bestRatedHotel(date);
-		Assert.assertEquals("Bridgewood, Rating:4 and Rates:200", name);
+		Assert.assertEquals("Ridgewood, Rating:5 and Rates:350", name);
+		
+	}
+	
+	@Test
+	public void findBestHotelAmongAll_shouldRetuen_HotelName() {
+		Scanner sc=new Scanner(System.in);
+		String date=sc.next();		
+		hotelReservation=new HotelReservationService();
+		String name=hotelReservation.bestRatedHotel(date);
+		Assert.assertEquals("Ridgewood, Rating:5 and Rates:350", name);
 		
 	}
 }

@@ -22,7 +22,7 @@ public class HotelReservationService {
 
 	}
 
-	public String[] minCostHotel(String date) {
+	public String[] CostHotel(String date) {
 		String[] str=date.split(",");
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 
@@ -61,11 +61,11 @@ public class HotelReservationService {
 	
 	}
 	public String calculate(String date) {
-		String name[]=minCostHotel(date);
+		String name[]=CostHotel(date);
 		return name[0]+", rates: "+Integer.valueOf(name[1]);
 	}
 	public String bestRatedHotel(String date) {
-		String name[]=minCostHotel(date);
+		String name[]=CostHotel(date);
 		String hotel[]=name[0].split("and");
 		
 		Map<String,Integer>rating=new HashMap<>();
