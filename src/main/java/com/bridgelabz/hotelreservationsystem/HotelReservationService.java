@@ -66,7 +66,7 @@ public class HotelReservationService {
 	}
 	public String bestRatedHotel(String date) {
 		String name[]=CostHotel(date);
-		String hotel[]=name[0].split("and");
+		String hotel[]=name[0].split(" and ");
 		
 		Map<String,Integer>rating=new HashMap<>();
 		Integer ratings=0;
